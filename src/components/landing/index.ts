@@ -1,0 +1,13 @@
+export { default as Hero } from '@/components/Hero';
+export { default as FeatureCard } from './FeatureCard';
+export { default as ScrollRevealText } from './ScrollRevealText';
+export { default as SlidingCards } from './SlidingCards';
+export { default as SlidingCard } from './SlidingCard';
+export { default as VideoWall } from './VideoWall';
+export { default as ParallaxGallery } from './ParallaxGallery';
+export { default as Toolkit } from './Toolkit';
+export { default as Marquee } from './Marquee';
+export { default as BubbleMarquee } from './BubbleMarquee';
+export { default as BottomText } from './BottomText';
+export { default as PricingSection } from './PricingSection';
+export { default as BackgroundImages } from './BackgroundImages';
