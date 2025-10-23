@@ -57,10 +57,12 @@ const SlidingCards: React.FC<SlidingCardsProps> = ({ children, className = '' })
   return (
     <div
       ref={containerRef}
+      className={`relative w-full z-[5] ${className}`}
       style={{ 
         height: `${100 + scrollPerCard * cardsToScrollPast}vh`,
+        width: 'calc(100% - 4rem)',
+        marginLeft: '2rem'
       }}
-      className={`relative w-full z-[5] ${className}`}
     >
       <div className="sticky top-0 h-screen w-full overflow-y-hidden overflow-x-visible z-[1]">
         {childrenArray.map((child, i) => {

@@ -22,6 +22,8 @@ export default {
         'marquee': 'marquee 25s linear infinite',
         'marquee2': 'marquee2 25s linear infinite',
         'expandRing': 'expandRing 2s infinite',
+        'scrollLeft': 'scrollLeft 80s linear infinite',
+        'scrollRight': 'scrollRight 80s linear infinite',
       },
       keyframes: {
         'fadeInScaleUp': {
@@ -44,6 +46,14 @@ export default {
           '0%': { width: '50%', height: '50%', opacity: '0' },
           '50%': { opacity: '1' },
           '100%': { width: '200%', height: '200%', opacity: '0' },
+        },
+        'scrollLeft': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'scrollRight': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
         },
         'accordion-down': {
           from: {

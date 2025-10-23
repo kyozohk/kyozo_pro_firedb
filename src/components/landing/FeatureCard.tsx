@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 const FeatureCard = () => {
   return (
-    <div className="w-[calc(100%-4rem)] h-[calc(100vh-8rem)] mt-40 mx-8 mb-24 flex flex-col justify-start relative overflow-hidden z-[3] isolate rounded-[30px] backdrop-blur-[10px] bg-background/80 border-[0.5px] border-muted-foreground shadow-lg">
+    <div className="w-full h-[calc(100vh-8rem)] mt-40 mb-24 flex flex-col justify-start relative overflow-hidden z-[3] isolate rounded-[30px] backdrop-blur-[10px] bg-background/80 border-[0.5px] border-muted-foreground shadow-lg">
       {/* Background gradient */}
       <div className="absolute top-1/2 right-[-5%] w-[1000px] h-[1000px] transform -translate-y-1/2 z-0 pointer-events-none">
         <div className="w-[1000px] h-[1000px] rounded-full bg-transparent relative overflow-hidden">

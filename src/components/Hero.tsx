@@ -21,8 +21,8 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <div className="w-full h-screen relative overflow-hidden flex items-center justify-center text-foreground bg-transparent">
       {/* Gradient elements */}
-      <div className="absolute top-[-100px] left-0 w-[1600px] h-[1000px] bg-[radial-gradient(circle,#2dd4bf,transparent_50%)] filter blur-[100px] z-[1] opacity-15 transform translate-x-[-33.33%] translate-y-[-33.33%] rounded-full"></div>
-      <div className="absolute top-[-400px] w-[1000px] h-[1400px] bg-[radial-gradient(circle,#f97316,transparent_90%)] filter blur-[100px] z-[1] opacity-[0.21] transform translate-x-[33.33%] translate-y-[-33.33%] rounded-full"></div>
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-[radial-gradient(circle,#9333ea,transparent_70%)] filter blur-[100px] z-[1] opacity-30 transform translate-x-[-30%] translate-y-[30%] rounded-full"></div>
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,#2dd4bf,transparent_70%)] filter blur-[100px] z-[1] opacity-30 transform translate-x-[30%] translate-y-[-30%] rounded-full"></div>
       
       {/* SVG Animation Container */}
       <div className="absolute top-[-20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 w-full max-w-[800px] overflow-hidden h-[480px] z-[2]">

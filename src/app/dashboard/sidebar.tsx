@@ -85,9 +85,6 @@ export function Sidebar({
     <div className="flex flex-col h-full">
       {/* Community Selector */}
       <div className="p-4 border-b">
-        <div className="font-medium text-xs uppercase text-muted-foreground mb-2">
-          COMMUNITY
-        </div>
         <Select 
           value={selectedCommunity || ''} 
           onValueChange={onSelectCommunity}

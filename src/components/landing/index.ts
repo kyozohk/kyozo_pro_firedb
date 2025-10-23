@@ -11,3 +11,4 @@ export { default as BubbleMarquee } from './BubbleMarquee';
 export { default as BottomText } from './BottomText';
 export { default as PricingSection } from './PricingSection';
 export { default as BackgroundImages } from './BackgroundImages';
+export { default as FixedFooter } from './FixedFooter';

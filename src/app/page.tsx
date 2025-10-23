@@ -15,18 +15,17 @@ import {
   Marquee, 
   BubbleMarquee, 
   BottomText, 
-  PricingSection
+  PricingSection,
+  FixedFooter
 } from "@/components/landing";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
-    <div className="container">
-      <ThemeToggle />
+    <div className="w-full">
       <Hero text="Discover Your Creative Universe" />
       <BackgroundImages />
       <FeatureCard />
-      <div className="my-80 bg-white dark:bg-background" style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+      <div className="my-80 w-full bg-white dark:bg-background">
         <ScrollRevealText text="Where creative minds converge" />      
       </div>
       <SlidingCards>
@@ -78,63 +77,63 @@ export default function Home() {
           {
             category: 'music',
             items: [
-              { text: 'Rock' },
+              { text: 'House' },
+              { text: 'Electronic' },
+              { text: 'Flamenco' },
+              { text: 'Funk' },
               { text: 'Jazz' },
-              { text: 'R&B' },
-              { text: 'Trance' },
-              { text: 'Techno' },
-              { text: 'Hip Hop' },
               { text: 'Classical' },
             ]
           },
           {
             category: 'classicism',
             items: [
+              { text: 'Surrealism' },
+              { text: 'Abstract' },
+              { text: 'Pop Art' },
+              { text: 'Bauhaus' },
               { text: 'Expressionism' },
               { text: 'Futurism' },
-              { text: 'Classicism' },
-              { text: 'Cubism' },
-              { text: 'Surrealism' },
-              { text: 'Dadaism' },
             ]
           },
           {
             category: 'jewelry',
             items: [
-              { text: 'Wood Burning' },
-              { text: 'Candle-making' },
-              { text: 'Crochet' },
-              { text: 'Jewelry' },
+              { text: 'Drawing' },
               { text: 'Pottery' },
+              { text: 'Sculpting' },
+              { text: 'Painting' },
+              { text: 'Jewelry' },
               { text: 'Weaving' },
             ]
           },
           {
             category: 'vintage',
             items: [
+              { text: 'Haute Couture' },
+              { text: 'Goth' },
+              { text: 'Sportswear' },
               { text: 'Chic' },
-              { text: 'Grunge' },
               { text: 'Vintage' },
-              { text: 'Boho' },
-              { text: 'Preppy' },
               { text: 'Streetwear' },
             ]
           },
           {
             category: 'minimal',
             items: [
-              { text: 'Stand-ups' },
-              { text: 'Musical' },
-              { text: 'Digital' },
-              { text: 'Theatre' },
-              { text: 'Dance' },
               { text: 'Opera' },
+              { text: 'Dance' },
+              { text: 'Theatre' },
+              { text: 'Slam Poetry' },
+              { text: 'Improv' },
+              { text: 'Stand-up' },
             ]
           }
         ]}
       />
      
-      <BottomText text="Join the creative universe" fontSize="6rem" fontWeight={700} />
+      <BottomText text="Join the Kyozo creative universe" fontSize="6rem" fontWeight={700} />
+      <FixedFooter />
     </div>
   );
 }

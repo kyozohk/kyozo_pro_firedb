@@ -1,86 +1,60 @@
 'use client';
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { 
-  MessageSquare, Users, BarChart3, Zap, 
-  Globe, Bell, Shield, Settings 
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
-const Toolkit: React.FC = () => {
-  const tools = [
-    { 
-      icon: <MessageSquare className="w-8 h-8" />, 
-      title: 'Messaging', 
-      description: 'Connect directly with your audience through personalized messaging' 
-    },
-    { 
-      icon: <Users className="w-8 h-8" />, 
-      title: 'Community', 
-      description: 'Build and nurture your creative community' 
-    },
-    { 
-      icon: <BarChart3 className="w-8 h-8" />, 
-      title: 'Analytics', 
-      description: 'Gain insights into your audience engagement' 
-    },
-    { 
-      icon: <Zap className="w-8 h-8" />, 
-      title: 'Automation', 
-      description: 'Streamline your workflow with powerful automation tools' 
-    },
-    { 
-      icon: <Globe className="w-8 h-8" />, 
-      title: 'Global Reach', 
-      description: 'Connect with creators and audiences worldwide' 
-    },
-    { 
-      icon: <Bell className="w-8 h-8" />, 
-      title: 'Notifications', 
-      description: 'Stay updated with real-time alerts and notifications' 
-    },
-    { 
-      icon: <Shield className="w-8 h-8" />, 
-      title: 'Security', 
-      description: 'Protect your content and community with advanced security' 
-    },
-    { 
-      icon: <Settings className="w-8 h-8" />, 
-      title: 'Customization', 
-      description: 'Tailor your experience to match your creative vision' 
-    },
-  ];
+interface ToolkitProps {
+  description?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+}
 
+const Toolkit: React.FC<ToolkitProps> = ({
+  description = `Explore a dynamic resources hub where creativity meets community. Here you'll find a curated collection of articles, videos and resources designed to inspire, inform and ignite your creative journey. Explore a dynamic resources hub where creativity meets community. Here you'll find a curated collection of articles, videos and resources designed to inspire, inform and ignite your creative journey.`,
+  ctaText = 'Check out CreativeLab',
+  ctaUrl = '#',
+}) => {
   return (
-    <div className="py-24 px-6 md:px-16 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">Creative Toolkit</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Everything you need to grow and engage with your creative community
-          </p>
+    <>
+      {/* Social Media Section */}
+      <section className="relative w-full flex flex-col items-center justify-center py-16 px-4 text-center overflow-visible z-auto">
+        <div className="text-[6.6rem] font-black leading-tight text-foreground mb-4 md:text-[6.6rem] sm:text-[3.3rem]">
+          We are not
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {tools.map((tool, index) => (
-            <div 
-              key={index} 
-              className="p-6 rounded-xl bg-background/50 backdrop-blur-sm border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
-            >
-              <div className="mb-4 text-primary">{tool.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{tool.title}</h3>
-              <p className="text-muted-foreground">{tool.description}</p>
-            </div>
-          ))}
+        <div className="mt-4 py-7 px-16 bg-background/80 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/10 inline-block">
+          <span className="text-[2.5rem] font-bold tracking-wider text-foreground sm:text-[1.5rem]">
+            Social Media
+          </span>
         </div>
-        
-        <div className="mt-16 text-center">
-          <Button size="lg" className="px-8">
-            Explore All Features
-          </Button>
+      </section>
+
+      {/* CreativeLab Section */}
+      <section className="relative w-full max-w-none m-0 py-64 px-6 overflow-hidden md:py-24 sm:px-8">
+        <div className="grid grid-cols-1 font-light text-[1.8rem] relative m-0 mx-auto md:grid-cols-2">
+          {/* Left Column */}
+          <div className="flex flex-col justify-end h-full">
+            <h2 className="text-[4.5rem] font-black leading-tight text-foreground m-0 -left-40 md:text-[3rem]">
+              CreativeLab
+              <br />
+              Your creative
+              <br />
+              toolkit
+            </h2>
+          </div>
+
+          {/* Right Column */}
+          <div className="relative flex flex-col justify-end h-full">
+            <p className="text-base leading-relaxed max-w-md text-foreground mb-8">
+              {description}
+            </p>
+            <a href={ctaUrl} className="mt-4 text-blue-500 font-semibold text-base inline-flex items-center self-start no-underline hover:underline">
+              {ctaText}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
 
