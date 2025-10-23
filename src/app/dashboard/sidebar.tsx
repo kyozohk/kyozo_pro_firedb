@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   Home, 
@@ -10,7 +11,9 @@ import {
   Send, 
   Users, 
   BarChart3, 
-  ChevronDown 
+  ChevronDown,
+  Building2,
+  Circle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -22,11 +25,19 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type Community = {
   id: string;
   name: string;
   logo?: string;
+  communityProfileImage?: string;
+  communityPrivacy?: 'private' | 'public';
+  communityType?: string;
+  description?: string;
+  tagline?: string;
+  supportedProducts?: string[];
+  tags?: string[];
 };
 
 type NavItem = {
@@ -36,15 +47,19 @@ type NavItem = {
   badge?: number;
 };
 
+interface SidebarProps {
+  communities: Community[];
+  selectedCommunity: string | null;
+  onSelectCommunity: (id: string) => void;
+  isLoading?: boolean;
+}
+
 export function Sidebar({ 
   communities, 
   selectedCommunity, 
-  onSelectCommunity 
-}: { 
-  communities: Community[]; 
-  selectedCommunity: string | null;
-  onSelectCommunity: (id: string) => void;
-}) {
+  onSelectCommunity,
+  isLoading = false
+}: SidebarProps) {
   const pathname = usePathname();
   
   const navItems: NavItem[] = [
@@ -81,58 +96,127 @@ export function Sidebar({
     },
   ];
 
+  // Function to render community icon
+  const renderCommunityIcon = (community: Community) => {
+    // Use communityProfileImage if available, fall back to logo if not
+    const imageUrl = community.communityProfileImage || community.logo;
+    
+    if (imageUrl) {
+      return (
+        <div className="relative h-10 w-10 rounded-full overflow-hidden mr-3 border border-accent/30 shadow-sm">
+          <Image 
+            src={imageUrl} 
+            alt={community.name} 
+            width={40} 
+            height={40} 
+            className="object-cover"
+          />
+        </div>
+      );
+    }
+    
+    // Default icon if no image is available
+    return (
+      <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center mr-3 border border-accent/30 shadow-sm">
+        <Building2 className="h-5 w-5 text-accent-foreground/70" />
+      </div>
+    );
+  };
+  
+  // Get the selected community object
+  const selectedCommunityObject = communities.find(c => c.id === selectedCommunity);
+  
   return (
     <div className="flex flex-col h-full">
       {/* Community Selector */}
       <div className="p-2 border-b border-accent/20">
-        <Select 
-          value={selectedCommunity || ''} 
-          onValueChange={onSelectCommunity}
-        >
-          <SelectTrigger className="w-full h-14 bg-background/5 border-accent/30 hover:border-primary/70 focus:border-primary focus:ring-1 focus:ring-primary">
-            <SelectValue placeholder="Select a community" />
-          </SelectTrigger>
-          <SelectContent className="bg-card border-accent/30">
-            {communities.map((community) => (
-              <SelectItem 
-                key={community.id} 
-                value={community.id}
-                className="h-12 hover:bg-accent hover:text-accent-foreground"
-              >
-                {community.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {isLoading ? (
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <Skeleton className="h-8 w-8 rounded-full mr-3" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          </div>
+        ) : (
+          <Select 
+            value={selectedCommunity || ''} 
+            onValueChange={onSelectCommunity}
+          >
+            <SelectTrigger className="w-full h-16 bg-background/5 border-accent/30 hover:border-primary/70 focus:border-primary focus:ring-1 focus:ring-primary">
+              {selectedCommunityObject ? (
+                <div className="flex items-center">
+                  {renderCommunityIcon(selectedCommunityObject)}
+                  <SelectValue placeholder="Select a community" />
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center mr-3">
+                    <Building2 className="h-4 w-4 text-accent-foreground/50" />
+                  </div>
+                  <SelectValue placeholder="Select a community" />
+                </div>
+              )}
+            </SelectTrigger>
+            <SelectContent className="bg-card border-accent/30 max-h-[calc(100vh-120px)] overflow-y-auto">
+              {communities.map((community) => (
+                <SelectItem 
+                  key={community.id} 
+                  value={community.id}
+                  className="h-16 hover:bg-accent hover:text-accent-foreground flex items-center px-2"
+                >
+                  <div className="flex items-center">
+                    {renderCommunityIcon(community)}
+                    <span className="ml-2">{community.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       {/* Navigation */}
       <nav className="flex-1 p-1 space-y-0.5">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          
-          return (
-            <Link key={item.name} href={selectedCommunity ? item.href : '#'} className="w-full">
-              <Button
-                variant={isActive ? "secondary" : "ghost"}
-                className={cn(
-                  "w-[98%] h-14 justify-start gap-3 font-normal my-0.5",
-                  isActive ? "bg-accent text-accent-foreground" : "hover:bg-accent/10 hover:text-accent-foreground",
-                  !selectedCommunity && "opacity-50 pointer-events-none"
-                )}
-                disabled={!selectedCommunity}
-              >
-                {item.icon}
-                <span className="text-base">{item.name}</span>
-                {item.badge && (
-                  <Badge variant="secondary" className="ml-auto bg-primary text-primary-foreground">
-                    {item.badge}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
-          );
-        })}
+        {isLoading ? (
+          // Skeleton loading state for navigation items
+          <div className="space-y-2 px-1 py-2">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex items-center gap-3">
+                <Skeleton className="h-5 w-5 rounded-md" />
+                <Skeleton className="h-8 w-full" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Actual navigation items
+          <>
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              
+              return (
+                <Link key={item.name} href={selectedCommunity ? item.href : '#'} className="w-full">
+                  <Button
+                    variant={isActive ? "secondary" : "ghost"}
+                    className={cn(
+                      "w-[98%] h-16 justify-start gap-3 font-normal my-0.5",
+                      isActive ? "bg-accent text-accent-foreground" : "hover:bg-accent/10 hover:text-accent-foreground",
+                      !selectedCommunity && "opacity-50 pointer-events-none"
+                    )}
+                    disabled={!selectedCommunity}
+                  >
+                    {item.icon}
+                    <span className="text-base">{item.name}</span>
+                    {item.badge && (
+                      <Badge gradient className="ml-auto">
+                        {item.badge}
+                      </Badge>
+                    )}
+                  </Button>
+                </Link>
+              );
+            })}
+          </>
+        )}
       </nav>
     </div>
   );
