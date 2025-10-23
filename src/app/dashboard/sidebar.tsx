@@ -84,17 +84,21 @@ export function Sidebar({
   return (
     <div className="flex flex-col h-full">
       {/* Community Selector */}
-      <div className="p-4 border-b">
+      <div className="p-2 border-b border-accent/20">
         <Select 
           value={selectedCommunity || ''} 
           onValueChange={onSelectCommunity}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full h-14 bg-background/5 border-accent/30 hover:border-primary/70 focus:border-primary focus:ring-1 focus:ring-primary">
             <SelectValue placeholder="Select a community" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-card border-accent/30">
             {communities.map((community) => (
-              <SelectItem key={community.id} value={community.id}>
+              <SelectItem 
+                key={community.id} 
+                value={community.id}
+                className="h-12 hover:bg-accent hover:text-accent-foreground"
+              >
                 {community.name}
               </SelectItem>
             ))}
@@ -103,24 +107,25 @@ export function Sidebar({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-2 space-y-1">
+      <nav className="flex-1 p-1 space-y-0.5">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           
           return (
-            <Link key={item.name} href={selectedCommunity ? item.href : '#'}>
+            <Link key={item.name} href={selectedCommunity ? item.href : '#'} className="w-full">
               <Button
                 variant={isActive ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full justify-start gap-3 font-normal",
+                  "w-[98%] h-14 justify-start gap-3 font-normal my-0.5",
+                  isActive ? "bg-accent text-accent-foreground" : "hover:bg-accent/10 hover:text-accent-foreground",
                   !selectedCommunity && "opacity-50 pointer-events-none"
                 )}
                 disabled={!selectedCommunity}
               >
                 {item.icon}
-                <span>{item.name}</span>
+                <span className="text-base">{item.name}</span>
                 {item.badge && (
-                  <Badge variant="secondary" className="ml-auto">
+                  <Badge variant="secondary" className="ml-auto bg-primary text-primary-foreground">
                     {item.badge}
                   </Badge>
                 )}

@@ -25,9 +25,28 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+  gradient?: boolean
+}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, gradient = false, ...props }: BadgeProps) {
+  if (gradient) {
+    return (
+      <div className="relative inline-block">
+        {/* Gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary rounded-full blur-[1px] opacity-90"></div>
+        
+        <div 
+          className={cn(
+            "relative inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none border-0 text-primary-foreground",
+            className
+          )} 
+          {...props} 
+        />
+      </div>
+    );
+  }
+  
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props} />
   )

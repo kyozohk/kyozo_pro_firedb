@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { Loader2 } from 'lucide-react';
-import { Sidebar } from './sidebar';
+import { Sidebar } from '@/app/dashboard/sidebar';
 
 type Community = {
   id: string;
@@ -31,8 +31,8 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar */}
-      <div className="w-64 border-r bg-muted/30 flex flex-col">
+      {/* Sidebar with updated styles */}
+      <div className="w-72 border-r border-accent/20 bg-card/30 flex flex-col">
         {communitiesLoading ? (
           <div className="flex justify-center items-center h-16">
             <Loader2 className="h-5 w-5 animate-spin text-primary" />

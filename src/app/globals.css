@@ -49,19 +49,19 @@ body {
     --card-foreground: 0 0% 98%;
     --popover: 255 10% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 255 100% 87%; /* Soft lavender */
-    --primary-foreground: 255 35% 41%;
+    --primary: 300 100% 62%; /* Pink from image */
+    --primary-foreground: 0 0% 100%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 255 35% 51%; /* Deep purple */
+    --accent: 270 100% 70%; /* Purple from image */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 255 100% 87%;
+    --ring: 270 100% 70%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -69,12 +69,12 @@ body {
     --chart-5: 340 75% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 300 100% 62%; /* Pink from image */
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-accent: 270 100% 15%; /* Dark purple for hover */
+    --sidebar-accent-foreground: 270 100% 70%; /* Purple from image */
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 270 100% 70%; /* Purple from image */
   }
 }
 

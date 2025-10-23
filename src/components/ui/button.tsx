@@ -41,10 +41,37 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   href?: string
+  gradient?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, href, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, href, gradient = false, ...props }, ref) => {
+    if (gradient) {
+      const buttonContent = (
+        <div className="relative group">
+          {/* Gradient border background */}
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-primary via-accent to-primary rounded-md blur-sm opacity-75 group-hover:opacity-100 transition duration-200"></div>
+          
+          {/* Button with transparent border */}
+          <button
+            className={cn(buttonVariants({ variant, size, className }), "relative border-0")}
+            ref={ref}
+            {...props}
+          />
+        </div>
+      );
+      
+      if (href) {
+        return (
+          <a href={href} className="inline-block">
+            {buttonContent}
+          </a>
+        );
+      }
+      
+      return buttonContent;
+    }
+    
     if (href) {
       return (
         <a
