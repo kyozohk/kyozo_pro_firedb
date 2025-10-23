@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -24,8 +24,11 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 type Community = {
   id: string;
@@ -54,13 +57,61 @@ interface SidebarProps {
   isLoading?: boolean;
 }
 
-export function Sidebar({ 
-  communities, 
-  selectedCommunity, 
+export function Sidebar({
+  communities,
+  selectedCommunity,
   onSelectCommunity,
-  isLoading = false
+  isLoading
 }: SidebarProps) {
   const pathname = usePathname();
+  const firestore = useFirestore();
+  const [memberCounts, setMemberCounts] = useState<Record<string, number>>({});
+  const [loadingCounts, setLoadingCounts] = useState(false);
+  
+  // Fetch member counts for communities
+  useEffect(() => {
+    if (!firestore || communities.length === 0) return;
+    
+    const fetchMemberCounts = async () => {
+      setLoadingCounts(true);
+      const counts: Record<string, number> = {};
+      
+      try {
+        // For each community, count members who have interacted with it
+        for (const community of communities) {
+          // First try to get messages for this community
+          const messagesQuery = query(
+            collection(firestore, 'messages'),
+            where('community', '==', community.id)
+          );
+          
+          const messagesSnapshot = await getDocs(messagesQuery);
+          const messages = messagesSnapshot.docs.map(doc => doc.data());
+          
+          // Extract unique user IDs
+          const userIds = new Set<string>();
+          messages.forEach(msg => {
+            if (msg.sender) userIds.add(msg.sender);
+            if (msg.readBy) {
+              msg.readBy.forEach((reader: any) => {
+                if (reader.userId) userIds.add(reader.userId);
+              });
+            }
+          });
+          
+          counts[community.id] = userIds.size;
+        }
+        
+        setMemberCounts(counts);
+      } catch (error) {
+        console.error("Error fetching member counts:", error);
+      } finally {
+        setLoadingCounts(false);
+      }
+    };
+    
+    fetchMemberCounts();
+  }, [firestore, communities]);
   
   const navItems: NavItem[] = [
     {
@@ -69,15 +120,15 @@ export function Sidebar({
       icon: <Home className="h-5 w-5" />,
     },
     {
-      name: 'Broadcast',
-      href: `/dashboard/${selectedCommunity || ''}/broadcast`,
+      name: 'Messages',
+      href: `/dashboard/${selectedCommunity || ''}/messages`,
       icon: <MessageSquare className="h-5 w-5" />,
+      badge: 76,
     },
     {
       name: 'Inbox',
       href: `/dashboard/${selectedCommunity || ''}/inbox`,
       icon: <Inbox className="h-5 w-5" />,
-      badge: 76,
     },
     {
       name: 'Sent',
@@ -88,6 +139,7 @@ export function Sidebar({
       name: 'Members',
       href: `/dashboard/${selectedCommunity || ''}/members`,
       icon: <Users className="h-5 w-5" />,
+      badge: selectedCommunity && memberCounts[selectedCommunity] ? memberCounts[selectedCommunity] : undefined,
     },
     {
       name: 'Analytics',
@@ -146,14 +198,14 @@ export function Sidebar({
               {selectedCommunityObject ? (
                 <div className="flex items-center">
                   {renderCommunityIcon(selectedCommunityObject)}
-                  <SelectValue placeholder="Select a community" />
+                  <div className="truncate">{selectedCommunityObject.name}</div>
                 </div>
               ) : (
                 <div className="flex items-center">
                   <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center mr-3">
                     <Building2 className="h-4 w-4 text-accent-foreground/50" />
                   </div>
-                  <SelectValue placeholder="Select a community" />
+                  <span className="text-muted-foreground">Select a community</span>
                 </div>
               )}
             </SelectTrigger>
